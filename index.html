@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大師級 AI 狼人殺決策引擎 - 零漏洞完全體</title>
+    <title>大師級 AI 狼人殺決策引擎 - 4神3狼鎖死版</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a2e; color: #e2e2e2; margin: 0; padding: 20px; text-align: center; }
         .container { max-width: 800px; margin: 0 auto; background: #161623; padding: 25px; border-radius: 12px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); border: 1px solid rgba(255, 255, 255, 0.1); }
         h1 { color: #e94560; font-size: 24px; margin-bottom: 5px; }
         .subtitle { color: #0f3460; font-size: 14px; margin-bottom: 20px; }
-        .config-box { background: #0f3460; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; text-align: left; border-left: 5px solid #e94560; }
-        .log-area { background: #000; color: #00ff00; padding: 15px; border-radius: 8px; height: 250px; overflow-y: auto; text-align: left; font-family: 'Courier New', Courier, monospace; font-size: 13px; margin-bottom: 20px; border: 1px solid #333; line-height: 1.6; }
-        .btn { background-color: #e94560; color: white; border: none; padding: 10px 20px; font-size: 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; margin: 5px; font-weight: bold; }
+        .config-box { background: #0f3460; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; text-align: left; border-left: 5px solid #e94560; line-height: 1.6; }
+        .log-area { background: #000; color: #00ff00; padding: 15px; border-radius: 8px; height: 280px; overflow-y: auto; text-align: left; font-family: 'Courier New', Courier, monospace; font-size: 13px; margin-bottom: 20px; border: 1px solid #333; line-height: 1.6; }
+        .btn { background-color: #e94560; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 5px; cursor: pointer; transition: 0.3s; margin: 5px; font-weight: bold; }
         .btn:hover { background-color: #ff6b81; }
         .btn-secondary { background-color: #4e5d6c; }
         .btn-secondary:hover { background-color: #6c7a89; }
@@ -26,15 +26,17 @@
 
 <div class="container">
     <h1>🐺 大師級 AI 狼人殺決策引擎 ⚙️</h1>
-    <div class="subtitle">Version 6.5 (修復底層陣列指針・獨立完全體)</div>
+    <div class="subtitle">Version 8.0 (預女獵騎・惡靈狼王鎖死版)</div>
     
     <div class="config-box">
-        <strong>⚙️ 底層鋼鐵定律已鎖死：</strong><br>
-        • 50/50 陣營平衡、強神配置（純白30%、女巫30%、獵人30%、白痴/騎士10%）。<br>
-        • <strong>真神強跳鎖</strong>：AI真神遇對跳100%起跳正視野，絕不裝死隱航。<br>
-        • <strong>結算精密閉環</strong>：女巫全程不自救、解藥不救反噬、死人天亮及日間直接出局不發言、絕無投票權。<br>
-        • <strong>反傷指針鎖</strong>：新局完美重置惡靈騎士反傷狀態，同毒同驗只死一神。<br>
-        • <strong>絕對中立旁白</strong>：移除法官發言天眼形容詞，純淨宣佈死訊，完場方可複盤。
+        <strong>⚙️ 職業板子配置 (4神3狼3民)：</strong><br>
+        • <strong>好人陣營</strong>：預言家(你)、女巫、獵人、騎士、村民x3 [INDEX]<br>
+        • <strong>狼人陣營</strong>：惡靈騎士、狼王、普通小狼x1 [INDEX]<br>
+        <strong>🛡️ 官方賽事級邏輯補丁：</strong><br>
+        • 真神強跳鎖：AI 真預言家遇對跳 100% 起跳正視野，絕不隱航 [INDEX]。<br>
+        • 精密死人判定：死人天亮與日間直接出局，絕對不能投票、發言 [INDEX, INDEX]。<br>
+        • 惡靈反傷鎖：解藥不救反噬，同毒同驗只死一神，新局 100% 重置 [INDEX, INDEX, INDEX]。<br>
+        • 旁白絕對中立：移除天眼定性詞，純淨宣佈死訊，完場才觸發複盤 [INDEX, INDEX]。
     </div>
 
     <div class="game-board" id="gameBoard">
@@ -42,24 +44,24 @@
     </div>
 
     <div class="log-area" id="logArea">
-        【系統提示】請選擇對局板子，點擊下方按鈕即可完美載入開局！
+        【系統提示】設定已完美鎖死！點擊下方按鈕即可秒速發牌、啟動對局！
     </div>
 
     <div class="action-panel" id="actionPanel">
-        <button class="btn" onclick="initGame('PROPHET_KNIGHT')">開局：預女獵騎・惡靈狼王 (4神3狼)</button>
-        <button class="btn btn-secondary" onclick="initGame('PURE_WHITE')">開局：純白夜影・狼巫局 (4神3狼)</button>
+        <button class="btn" onclick="initGame()">立即啟動：預女獵騎・惡靈狼王局</button>
     </div>
 </div>
 
 <script>
     let state = {
-        boardType: '', players: [], log: [], stage: 'INIT', dayNum: 1,
-        playerIdx: 0, lastNightKilled: null, evilKnightReflected: false, gameOver: false
+        players: [], log: [], stage: 'INIT', dayNum: 1,
+        lastNightKilled: null, evilKnightReflected: false, gameOver: false
     };
 
     const names = ["玩家(你)", "阿明", "大壯", "翠花", "二狗", "鐵柱", "小麗", "強哥", "喪彪", "靜靜"];
 
     function addLog(text) {
+        // 旁白中立鎖：過濾任何具有引導性的天眼定性詞
         let filteredText = text.replace(/真預言家/g, "玩家").replace(/鐵狼/g, "玩家").replace(/惡靈騎士/g, "玩家");
         state.log.push(filteredText);
         const logArea = document.getElementById('logArea');
@@ -67,22 +69,16 @@
         logArea.scrollTop = logArea.scrollHeight;
     }
 
-    function initGame(type) {
+    function initGame() {
         state = {
-            boardType: type, players: [], log: [], stage: 'NIGHT_1', dayNum: 1,
-            playerIdx: 0, lastNightKilled: null, evilKnightReflected: false, gameOver: false
+            players: [], log: [], stage: 'NIGHT_1', dayNum: 1,
+            lastNightKilled: null, evilKnightReflected: false, gameOver: false // 滿血重置反傷
         };
         
-        addLog(⚡ 全新對局開啟！板子類型：${type === 'PROPHET_KNIGHT' ? '預女獵騎・惡靈狼王' : '純白夜影・狼巫局'});
-        addLog(⚙️ System.flush_seed() 隨機數種子碼已強制重刷，進行暴力洗牌...);
+        addLog(⚡ 預女獵騎・惡靈狼王 (4神3狼) 獨立對局正式開啟！);
+        addLog(⚙️ System.flush_seed() 隨機種子碼已銷毀重刷，進行去公式化暴力洗牌...);
 
-        let roles = [];
-        if (type === 'PROPHET_KNIGHT') {
-            roles = ['預言家', '女巫', '獵人', '騎士', '村民', '村民', '村民', '惡靈騎士', '狼王', '普通小狼'];
-        } else {
-            roles = ['純白之女', '女巫', '獵人', '白痴', '村民', '村民', '村民', '狼巫', '普通小狼', '普通小狼'];
-        }
-        
+        let roles = ['預言家', '女巫', '獵人', '騎士', '村民', '村民', '村民', '惡靈騎士', '狼王', '普通小狼'];
         roles.sort(() => Math.random() - 0.5);
 
         for (let i = 0; i < 10; i++) {
@@ -91,13 +87,13 @@
                 name: names[i],
                 role: roles[i],
                 isAlive: true,
-                isWolf: roles[i].includes('狼') || roles[i].includes('惡靈騎士') || roles[i].includes('狼巫'),
+                isWolf: roles[i].includes('狼') || roles[i].includes('惡靈騎士'),
                 deathTime: null,
                 claimRole: '未知'
             });
         }
 
-        // 【核心 Bug 完美修復】：將原先錯誤的 state.players.role 精准修正為指向 1 號玩家的 state.players[0].role
+        // 🛠️【指針零號索引鎖死修復】精準抓取 1 號玩家的底牌，絕不崩潰
         addLog(👁️ 【身份發牌完成】你是 1 號玩家，你的真實底牌是：【${state.players[0].role}】！);
         renderBoard();
         enterNight();
@@ -122,7 +118,8 @@
         let targetPool = state.players.filter(p => p.id !== 1 && p.isAlive);
         let nightKilled = targetPool[Math.floor(Math.random() * targetPool.length)];
         
-        if (state.players[0].isAlive && (state.players[0].role === '預言家' || state.players[0].role === '純白之女')) {
+        // 🛠️【指針修復】
+        if (state.players[0].isAlive && state.players[0].role === '預言家') {
             renderPlayerNightAction();
         } else {
             executeNightSettlement(nightKilled.id);
@@ -131,7 +128,7 @@
 
     function renderPlayerNightAction() {
         const panel = document.getElementById('actionPanel');
-        panel.innerHTML = <p>🔮 請選擇你今晚要發動黑夜技能查驗的目標號碼：</p>;
+        panel.innerHTML = <p>🔮 請選擇你今晚要發動黑夜天眼查驗的目標號碼（只知陣營好壞）：</p>;
         state.players.forEach(p => {
             if (p.id !== 1 && p.isAlive) {
                 panel.innerHTML += <button class="btn" onclick="playerNightVerify(${p.id})">${p.id}號</button>;
@@ -141,23 +138,15 @@
 
     function playerNightVerify(targetId) {
         let target = state.players.find(p => p.id === targetId);
-        addLog(🔮 【黑夜技能查驗】你悄悄查驗了 ${targetId} 號玩家...);
+        addLog(🔮 【黑夜天眼查驗】你悄悄查驗了 ${targetId} 號玩家...);
+        addLog(神明啟示：${targetId}號 玩家的真實陣營為：【${target.isWolf ? '狼人陣營' : '好人陣營'}】！);
         
-        if (state.players[0].role === '純白之女') {
-            addLog(神明啟示：${targetId}號 玩家的具體真實身份為：【${target.role}】！);
-            if (target.isWolf) {
-                target.isAlive = false;
-                target.deathTime = "NIGHT";
-                addLog(⚡ 【特殊結算】精準聖光處決狼人！${targetId}號玩家將在天亮時直接爆體身亡！);
-            }
-        } else if (state.players[0].role === '預言家') {
-            addLog(神明啟示：${targetId}號 玩家的真實陣營為：【${target.isWolf ? '狼人陣營' : '好人陣營'}】！);
-            if (target.role === '惡靈騎士' && !state.evilKnightReflected) {
-                state.players[0].isAlive = false;
-                state.players[0].deathTime = "NIGHT";
-                state.evilKnightReflected = true;
-                addLog(💀 【致命反噬】警告！你查驗了惡靈騎士，觸發神聖反噬詛咒，你已在黑夜中當場暴斃！);
-            }
+        // 【核心修復：反傷必死鎖】預言家主動驗中惡靈騎士，解藥不救，黑夜強制反噬暴斃
+        if (target.role === '惡靈騎士' && !state.evilKnightReflected) {
+            state.players[0].isAlive = false;
+            state.players[0].deathTime = "NIGHT";
+            state.evilKnightReflected = true;
+            addLog(💀 【致命反噬】警告！你查驗了惡靈騎士，觸發神聖反噬詛咒，你已在黑夜中當場暴斃！);
         }
         
         let targetPool = state.players.filter(p => p.id !== 1 && p.isAlive);
@@ -170,6 +159,7 @@
         let witch = state.players.find(p => p.role === '女巫');
         let isPeaceNight = false;
 
+        // 女巫不能自救鐵律
         if (witch && witch.isAlive && state.lastNightKilled !== witch.id) {
             if (Math.random() > 0.5) {
                 isPeaceNight = true;
@@ -189,6 +179,8 @@
 
     function triggerMorning() {
         addLog(<br>☀️ 【第 ${state.dayNum} 天：天亮請睜眼】);
+        
+        // 嚴格執行死人直接出局，純淨宣佈死訊
         let deadIds = state.players.filter(p => !p.isAlive && p.deathTime === "NIGHT").map(p => p.id);
         
         if (deadIds.length === 0) {
@@ -210,6 +202,7 @@
         let fakeProphetJumped = false;
         let wolfTargetId = state.players.find(p => !p.isWolf && p.isAlive).id;
 
+        // 模擬 NPC 隨機悍跳
         state.players.forEach(p => {
             if (!p.isAlive || p.id === 1) return;
             if (p.isWolf && !fakeProphetJumped && Math.random() > 0.4) {
@@ -219,24 +212,28 @@
             }
         });
 
-        let realProphet = state.players.find(p => p.role === '預言家' || p.role === '純白之女');
+        // 真神強跳鎖：只要有對跳，AI 真預言家 100% 強跳正視野
+        let realProphet = state.players.find(p => p.role === '預言家');
         if (realProphet && realProphet.isAlive && realProphet.id !== 1 && fakeProphetJumped) {
             let wolfPartner = state.players.find(p => p.isWolf && p.isAlive);
             addLog(● ${realProphet.id}號 玩家 🗣️：<strong>（觸發真神強跳鎖）「都別吵了！我才是唯一真神！前面跳預言家的全是悍狼！我昨晚真實查驗的是 ${wolfPartner.id}號，鐵狼一隻！騎士快出來決鬥撞死他！」</strong>);
         }
+
         if (state.players[0].isAlive) {
-renderPlayerDayAction();
-} else {
-addLog(【系統提示】你已出局，死人絕對無法投票與發言，後台 AI 正在高速接管並自動推進完場...);
-setTimeout(autoDayVote, 1500);
-}
-}
-function renderPlayerDayAction() {
-const panel = document.getElementById('actionPanel');
-panel.innerHTML = <p>🗣️ 輪到你發言控盤，請下達白天最高放逐/投票指令：</p>;
-if (state.players[0].role === '騎士') {
-panel.innerHTML += <div style="margin-bottom:10px; color:#ffda79;">⚔️ 騎士專屬特殊技能：</div>;
-state.players.forEach(p => {
+            renderPlayerDayAction();
+        } else {
+            addLog(【系統提示】你已出局，死人絕對無法投票與發言，後台 AI 正在高速接管並自動推進完場...);
+            setTimeout(autoDayVote, 1500);
+        }
+    }
+
+    function renderPlayerDayAction() {
+        const panel = document.getElementById('actionPanel');
+        panel.innerHTML = <p>🗣️ 輪到你發言控盤，請下達白天最高放逐/投票指令：</p>;
+        
+        if (state.players[0].role === '騎士') {
+            panel.innerHTML += <div style="margin-bottom:10px; color:#ffda79;">⚔️ 騎士專屬特殊技能：</div>;
+            state.players.forEach(p => {
 if (p.id !== 1 && p.isAlive) {
 panel.innerHTML += <button class="btn" style="background-color:#4834d4;" onclick="executeKnightDuel(${p.id})">⚔️ 決鬥 ${p.id}號</button>;
 }
@@ -255,7 +252,7 @@ addLog(<br>⚔️ 【騎士起跳・發動白光決鬥】1 號玩家(你)當場�
 if (target.isWolf) {
 target.isAlive = false;
 target.deathTime = "DAY_DUEL";
-addLog(💥 【決鬥結果】決鬥成功！${targetId}號 玩家的真實底牌確實是【狼營】，當場被你一槍戳穿、爆體暴斃身亡！);
+addLog(💥 【決鬥結果】決鬥成功！${targetId}號 玩家底牌確實是【狼人】，當場被你一槍戳穿、爆體暴斃身亡！);
 addLog(⚡ 【特殊結算】狼人日間決鬥暴斃，白天投票與發言被強行終止，直接強行快進切換至黑夜！);
 renderBoard();
 checkGameEnd();
@@ -281,6 +278,7 @@ addLog(<br>🗳️ 【白天公投結算】你發言帶隊，帶領全場把票�
 target.isAlive = false;
 target.deathTime = "DAY_VOTE";
 addLog(❌ 放逐結果：${targetId}號 玩家遭到全場最高票放逐出局！);
+// 狼王被票死可以開槍帶人
 if (target.role === '狼王') {
 let godPlayer = state.players.find(p => !p.isWolf && p.isAlive);
 if(godPlayer) {
@@ -326,6 +324,7 @@ triggerFinalReview();
 }
 }
 function triggerFinalReview() {
+// 只有完場才會觸發終極全知大複盤
 addLog(<br>===================================);
 addLog(📊 💎 【大師賽大成・終極大複盤文本】 💎);
 state.players.forEach(p => {
